@@ -15,6 +15,16 @@ View your app in AI Studio: https://ai.studio/apps/755c3936-8f33-4b46-a3b6-2d8d0
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`
+
+## Deploy to GitHub Pages
+
+This repository includes a GitHub Actions workflow that builds the Vite app and publishes the `dist` output to GitHub Pages.
+
+1. Push this project to a public GitHub repository.
+2. In GitHub, open **Settings > Pages**.
+3. Set **Source** to **GitHub Actions**.
+4. Push to the `main` or `master` branch, then wait for the **Deploy to GitHub Pages** action to finish.
+
+GitHub Pages is static hosting, so server API routes cannot run there. The app uses its built-in browser fallback response mode for the chat section.

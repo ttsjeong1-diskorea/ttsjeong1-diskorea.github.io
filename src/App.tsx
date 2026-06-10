@@ -1,47 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   User, BookOpen, Award, Sparkles, Send, ExternalLink, Briefcase, 
   Layers, Globe, Search, Building, ChevronRight, Quote, HeartPulse, 
   Mail, Calendar, GraduationCap, ArrowUpRight, Compass, ShieldAlert
 } from 'lucide-react';
-import { ProfileData, Publication } from './types';
+import { PROFILE_DATA, PUBLICATIONS_DATA } from './data/profileData';
 import BreathingTimer from './components/BreathingTimer';
 import ResearchChat from './components/ResearchChat';
 
 export default function App() {
-  const [profile, setProfile] = useState<ProfileData | null>(null);
-  const [publications, setPublications] = useState<Publication[]>([]);
+  const [profile] = useState(PROFILE_DATA);
+  const [publications] = useState(PUBLICATIONS_DATA);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedPubId, setExpandedPubId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"research" | "somatic">("research");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  // Fetch data from local Express endpoints
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        setIsLoading(true);
-        const [profileRes, pubsRes] = await Promise.all([
-          fetch("/api/profile"),
-          fetch("/api/publications")
-        ]);
-
-        if (profileRes.ok && pubsRes.ok) {
-          const profileData = await profileRes.json();
-          const pubsData = await pubsRes.json();
-          setProfile(profileData);
-          setPublications(pubsData);
-        }
-      } catch (err) {
-        console.error("API Fetch Error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
 
   const filteredPublications = publications.filter(pub => {
     const matchesCategory = selectedCategory === "All" || pub.category === selectedCategory;
@@ -53,21 +27,6 @@ export default function App() {
 
   const categories = ["All", "Journal Paper", "Technical Report", "Book"];
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white px-4">
-        <motion.div 
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 border-4 border-brand-100 border-t-brand-700 rounded-full mb-4"
-        />
-        <h2 className="text-lg font-serif font-semibold tracking-wide text-brand-50 animate-pulse">
-          정택수 국선도 개인연구 홈페이지를 불러오고 있습니다...
-        </h2>
-        <p className="text-xs text-gray-400 mt-2 font-mono">Loading corporate-academic library</p>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-neutral-50/50 text-gray-800 font-sans selection:bg-brand-100 selection:text-brand-800">

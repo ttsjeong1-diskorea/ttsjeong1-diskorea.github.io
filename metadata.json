@@ -1,0 +1,6 @@
+{
+  "name": "정택수 국선도 개인연구소",
+  "description": "국선도 단전호흡, 대체의학 연구 및 심신 치유 솔루션에 관한 정택수 대표의 소마틱 라이브러리 및 하이브리드 스트레스 조절 연구소 홈페이지",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
